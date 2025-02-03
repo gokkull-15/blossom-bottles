@@ -1,0 +1,20 @@
+perfume-ecommerce/
+├── backend/
+│   ├── models/
+│   │   └── User.js
+│   ├── routes/
+│   │   └── auth.js
+│   ├── config/
+│   │   └── db.js
+│   ├── server.js
+├── frontend/
+│   ├── public/
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── Login.jsx
+│   │   │   ├── Signup.jsx
+│   │   │   ├── Profile.jsx
+│   │   ├── App.js
+│   │   ├── index.js
+│   ├── tailwind.config.js
+│   ├── package.json
