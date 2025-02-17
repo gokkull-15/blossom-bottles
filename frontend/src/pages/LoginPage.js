@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
+import {FaEnvelope, FaLock } from "react-icons/fa";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
