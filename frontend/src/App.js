@@ -8,14 +8,13 @@ import SignUpPage from "./pages/SignUpPage";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import Help from "./components/Help";
-import { FaShoppingCart, FaUser, FaHome } from "react-icons/fa";
 
 export default function App() {
   return (
     <Router>
       <div className="min-h-screen flex flex-col">
         <NavBar />
-        <main className="flex-1 p-6">
+        <main className="flex-1">
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/account" element={<AccountPage />} />
