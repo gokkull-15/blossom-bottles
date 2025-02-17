@@ -5,18 +5,17 @@ import CartPage from "./pages/CartPage";
 import OrderPage from "./pages/OrderPage";
 import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
-import NavBar from "./components/NavBar";
-import Footer from "./components/Footer";
+import HomePage1 from "./pages/HomePage1";
 import Help from "./components/Help";
 
 export default function App() {
   return (
     <Router>
       <div className="min-h-screen flex flex-col">
-        <NavBar />
         <main className="flex-1">
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/homepage1" element={<HomePage1 />} />
             <Route path="/account" element={<AccountPage />} />
             <Route path="/cart" element={<CartPage />} />
             <Route path="/order" element={<OrderPage />} />
@@ -25,7 +24,6 @@ export default function App() {
             <Route path="/help" element={<Help />} />
           </Routes>
         </main>
-        <Footer />
       </div>
     </Router>
   );
