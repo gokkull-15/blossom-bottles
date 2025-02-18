@@ -8,6 +8,7 @@ import {
   FaSignOutAlt,
   FaHome
 } from "react-icons/fa";
+import {GiPerfumeBottle} from "react-icons/gi";
 
 export default function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,13 +18,21 @@ export default function NavBar() {
       {/* Navbar */}
       <nav className="bg-gray-900 p-4 text-white shadow-lg fixed top-0 left-0 w-full z-50">
         <div className="flex justify-between items-center">
+          {/* Hamburger Icon for Sidebar */}
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="text-2xl focus:outline-none hover:text-yellow-400 transition"
           >
             <FaBars />
           </button>
-          <h1 className="text-2xl font-bold">Blossom Bottles</h1>
+
+          {/* Blossom Bottles Centered with Perfume Bottle Icon */}
+          <div className="flex items-center justify-center w-full">
+            <GiPerfumeBottle className="text-4xl text-yellow-400 mr-2" />
+            <h1 className="text-2xl font-bold text-yellow-400">
+              Blossom Bottles
+            </h1>
+          </div>
         </div>
       </nav>
 
@@ -35,7 +44,7 @@ export default function NavBar() {
         ></div>
       )}
 
-      {/* Sidebar Pop-up (Now Always in the Front) */}
+      {/* Sidebar Pop-up */}
       <div
         className={`fixed left-0 top-0 h-full bg-gray-800 text-white shadow-2xl w-72 p-6 transform transition-transform z-50 ${
           isOpen ? "translate-x-0" : "-translate-x-full"
