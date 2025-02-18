@@ -1,29 +1,47 @@
 import { Link } from "react-router-dom";
-import { FaSignInAlt, FaUserPlus } from "react-icons/fa";
-import { GiPerfumeBottle } from "react-icons/gi";
+import {
+  FaSignInAlt,
+  FaUserPlus,
+  FaShoppingCart,
+  FaGift,
+  FaStar,
+} from "react-icons/fa";
+import { GiPerfumeBottle, GiShoppingBag } from "react-icons/gi";
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-purple-400 via-pink-300 to-red-400 text-center p-6">
-      <h1 className="text-5xl font-bold text-white flex items-center gap-3">
-        <GiPerfumeBottle /> Blossom Bottles
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-900 text-center p-10">
+      {/* Header */}
+      <h1 className="text-6xl font-extrabold text-yellow-400 flex items-center gap-5">
+        <GiPerfumeBottle className="text-7xl text-yellow-500" /> Blossom Bottles
       </h1>
-      <p className="mt-4 text-lg text-white">
-        Exquisite and Elegant Perfume Bottles Just for You
+      <p className="mt-5 text-2xl text-gray-300 flex items-center gap-3">
+        <FaGift className="text-4xl text-yellow-400" /> Exquisite & Elegant
+        Perfume Bottles Just for You
       </p>
-      <div className="mt-6 flex gap-4">
+
+      {/* Buttons */}
+      <div className="mt-8 flex gap-6">
         <Link
           to="/login"
-          className="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition flex items-center gap-2"
+          className="bg-yellow-600 text-gray-900 text-lg px-10 py-3 rounded-lg hover:bg-yellow-500 transition flex items-center gap-3 shadow-lg"
         >
-          <FaSignInAlt /> Login
+          <FaSignInAlt className="text-3xl" /> Login
         </Link>
         <Link
           to="/signup"
-          className="bg-purple-600 text-white px-6 py-2 rounded-full hover:bg-purple-700 transition flex items-center gap-2"
+          className="bg-gray-800 text-yellow-400 text-lg px-10 py-3 rounded-lg hover:bg-gray-700 transition flex items-center gap-3 shadow-lg"
         >
-          <FaUserPlus /> Sign Up
+          <FaUserPlus className="text-3xl" /> Sign Up
         </Link>
+      </div>
+
+      {/* Additional Icons */}
+      <div className="mt-10 flex gap-8 text-yellow-400 text-5xl">
+        <FaShoppingCart className="hover:text-yellow-300 transition" />
+        <GiShoppingBag className="hover:text-yellow-500 transition" />
+        <FaGift className="hover:text-yellow-400 transition" />
+        <FaStar className="hover:text-yellow-300 transition" />
       </div>
     </div>
   );
