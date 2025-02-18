@@ -3,11 +3,13 @@ import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
+import p2 from "../requirements/perfume2.png"
+import p1 from "../requirements/perfume1.png"
 
 const latestOffers = [
-  { id: 1, name: "Luxury Perfume", price: "$49.99", image: "perfume1.jpg" },
-  { id: 2, name: "Elegant Scent", price: "$59.99", image: "perfume2.jpg" },
-  { id: 3, name: "Mystic Aroma", price: "$39.99", image: "perfume3.jpg" },
+  { id: 1, name: "Luxury Perfume", price: "$49.99", image: {p2} },
+  { id: 2, name: "Elegant Scent", price: "$59.99", image: {p2} },
+  { id: 3, name: "Mystic Aroma", price: "$39.99", image: {p2} },
 ];
 
 const bestSellers = [
@@ -15,14 +17,14 @@ const bestSellers = [
     id: 1,
     name: "Classic Fragrance",
     price: "$69.99",
-    image: "bestseller1.jpg",
+    image: "../requirements/perfume1.png",
   },
-  { id: 2, name: "Timeless Scent", price: "$79.99", image: "bestseller2.jpg" },
+  { id: 2, name: "Timeless Scent", price: "$79.99", image: "../requirements/perfume3.png" },
   {
     id: 3,
     name: "Signature Essence",
     price: "$89.99",
-    image: "bestseller3.jpg",
+    image: "../requirements/perfume2.png",
   },
 ];
 
@@ -49,9 +51,9 @@ export default function HomePage1() {
           {latestOffers.map((item) => (
             <div key={item.id} className="bg-white p-4 rounded-lg shadow-lg">
               <img
-                src={item.image}
+                src={p2}
                 alt={item.name}
-                className="w-full h-40 object-cover rounded-md"
+                className="w-full h-50 object-cover rounded-md"
               />
               <h3 className="text-lg font-semibold mt-2">{item.name}</h3>
               <p className="text-xl font-bold text-purple-500">{item.price}</p>
@@ -66,7 +68,7 @@ export default function HomePage1() {
           {bestSellers.map((item) => (
             <div key={item.id} className="bg-white p-4 rounded-lg shadow-lg">
               <img
-                src={item.image}
+                src={p1}
                 alt={item.name}
                 className="w-full h-40 object-cover rounded-md"
               />
