@@ -6,7 +6,6 @@ import OrderPage from "./pages/OrderPage";
 import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
 import HomePage1 from "./pages/HomePage1";
-import Help from "./components/Help";
 
 export default function App() {
   return (
@@ -21,7 +20,6 @@ export default function App() {
             <Route path="/orders" element={<OrderPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignUpPage />} />
-            <Route path="/help" element={<Help />} />
           </Routes>
         </main>
       </div>
