@@ -9,7 +9,7 @@ import {
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-900 text-white text-center p-6 mt-10">
+    <footer className="bg-gray-900 text-white text-center p-6">
       {/* Social Media Icons */}
       <div className="flex justify-center gap-6 mb-3">
         <a href="facebook.com" className="text-purple-400 hover:text-purple-500 text-2xl">
