@@ -85,6 +85,14 @@ export default function NavBar() {
           </li>
           <li>
             <Link
+              to="/seller"
+              className="flex items-center gap-3 hover:text-yellow-400 transition"
+            >
+              <FaSignOutAlt /> Seller
+            </Link>
+          </li>
+          <li>
+            <Link
               to="/"
               className="flex items-center gap-3 text-red-400 hover:text-red-600 transition"
             >

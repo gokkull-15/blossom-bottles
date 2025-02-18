@@ -8,7 +8,7 @@ import {
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-export default function Account() {
+export default function AccountPage() {
   const user = {
     name: "John Doe",
     email: "johndoe@example.com",
