@@ -69,11 +69,9 @@
 
                         <!-- Buttons -->
                         <div class="flex gap-3 mt-4">
-                            <a href="orderpage.html" class="flex-1 bg-yellow-500 text-black py-2 rounded-lg font-bold hover:bg-yellow-400 transition duration-300 flex items-center justify-center gap-2">
-                                <button>
-                                    <i class="fas fa-bolt"></i> Buy Now
-                                </button>
-                            </a>
+                            <button onclick="orderNow('${product._id}')" class="flex-1 bg-yellow-500 text-black py-2 rounded-lg font-bold hover:bg-yellow-400 transition duration-300 flex items-center justify-center gap-2">
+                                <i class="fas fa-bolt"></i> Buy Now
+                            </button>
                             <button onclick="addToCart('${product._id}')" class="flex-1 bg-gray-700 text-white py-2 rounded-lg font-bold hover:bg-gray-600 transition duration-300 flex items-center justify-center gap-2">
                                 <i class="fas fa-shopping-cart"></i> Add to Cart
                             </button>
@@ -93,8 +91,13 @@
         localStorage.setItem("cartProductId", productId);
         window.location.href = "cartpage.html"; // Redirect to cart
     }
-</script>
 
+    function orderNow(productId) {
+    localStorage.setItem("orderProductId", productId);
+    window.location.href = "orderpage.html"; // Redirect to order page
+}
+
+</script>
 
 </body>
 </html>

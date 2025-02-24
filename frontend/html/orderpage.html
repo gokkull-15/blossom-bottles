@@ -6,69 +6,88 @@
     <title>Orders - Your Purchases</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
-
 </head>
-<body class="bg-gray-900 min-h-screen text-white p-6">
+<body class="bg-gray-900 min-h-screen text-white flex flex-col ">
+
+    <!-- Navbar -->
+    <nav class="bg-gray-800 p-4 flex justify-between items-center">
+        <h1 class="text-3xl font-bold text-yellow-400 flex items-center gap-2">
+            <i class="fas fa-wine-bottle"></i> Blossom Bottles
+        </h1>
+        <div class="flex items-center space-x-4">
+            <a href="homepage.html" class="text-gray-300 hover:text-yellow-400 transition">Home</a>
+            <a href="accountpage.html" class="text-gray-300 hover:text-yellow-400 transition">Account</a>
+            <a href="cartpage.html" class="text-gray-300 hover:text-yellow-400 transition">Cart</a>
+            <a href="sellerpage.html" class="text-gray-300 hover:text-yellow-400 transition">Seller</a>
+            <a href="orderpage.html" class="text-gray-300 hover:text-yellow-400 transition">Order</a>
+            <a href="contact.html" class="text-gray-300 hover:text-yellow-400 transition">Contact</a>
+        </div>
+    </nav>
 
     <!-- Page Header -->
-    <h1 class="text-2xl font-bold flex items-center gap-2 pb-4 border-b border-gray-700">
+    <h1 class="text-2xl font-bold flex items-center gap-2 pb-4 border-b border-gray-700 mt-6">
         <i class="fas fa-box"></i> Your Orders
     </h1>
 
     <!-- Orders Container -->
     <div id="orders-container" class="mt-6">
-        <!-- Orders will be dynamically inserted here -->
+        <p class="text-center text-gray-400 text-lg" id="no-orders">Loading orders...</p>
     </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-center p-4 mt-auto">
+        <p class="text-gray-400">&copy; 2025 Blossom Bottles. All rights reserved.</p>
+    </footer>
 
     <!-- JavaScript -->
     <script>
-        const orders = [
-            { id: 1, name: "Blossom Bottle A", image: "perfume1.png", deliveryDate: "Feb 25, 2025", cancelled: false },
-            { id: 2, name: "Blossom Bottle B", image: "perfume3.png", deliveryDate: "Feb 27, 2025", cancelled: false }
-        ];
+    document.addEventListener("DOMContentLoaded", async () => {
+        const orderContainer = document.getElementById("orders-container");
+        const productId = localStorage.getItem("orderProductId");
 
-        function renderOrders() {
-            const container = document.getElementById("orders-container");
-            container.innerHTML = "";
+        if (!productId) {
+            orderContainer.innerHTML = '<p class="text-center text-gray-400 mt-10 text-lg">No orders placed yet.</p>';
+            return;
+        }
 
-            if (orders.length === 0) {
-                container.innerHTML = '<p class="text-center text-gray-400 mt-10 text-lg">No orders placed yet.</p>';
-                return;
-            }
+        try {
+            const response = await fetch(`http://localhost:5000/api/products/${productId}`);
+            if (!response.ok) throw new Error("Failed to fetch product");
 
-            orders.forEach(order => {
-                const orderElement = document.createElement("div");
-                orderElement.className = "bg-gray-800 p-4 rounded-lg mb-4 shadow-lg flex items-center";
-                
-                orderElement.innerHTML = `
-                    <img src="${order.image}" alt="${order.name}" class="w-20 h-20 rounded-lg border border-gray-700">
-                    <div class="ml-4 flex-1">
-                        <h2 class="text-lg font-semibold">${order.name}</h2>
-                        <p class="text-yellow-400 flex items-center gap-2">
-                            <i class="fas fa-calendar-alt"></i> Delivery Date: ${order.deliveryDate}
-                        </p>
+            const product = await response.json();
+
+            orderContainer.innerHTML = `
+                <div class="flex items-center bg-gray-800 p-4 rounded-lg mb-4 shadow-lg">
+                    <img src="${product.imageUrl}" alt="${product.name}" class="w-20 h-20 rounded-lg border border-gray-700">
+                    <div class="flex-1 ml-4">
+                        <h2 class="text-lg font-semibold">${product.name}</h2>
+                        <p class="text-yellow-400 font-bold">$${product.price.toFixed(2)}</p>
                     </div>
-                    ${
-                        order.cancelled
-                            ? `<p class="text-red-400 font-bold flex items-center gap-2"><i class="fas fa-times-circle"></i> Order Cancelled</p>`
-                            : `<button onclick="cancelOrder(${order.id})" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg flex items-center gap-2">
-                                <i class="fas fa-times-circle"></i> Cancel Order
-                              </button>`
-                    }
-                `;
-                container.appendChild(orderElement);
-            });
+                    <button onclick="cancelOrder()" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg flex items-center gap-2">
+                        <i class="fas fa-times"></i> Cancel Order
+                    </button>
+                </div>
+            `;
+        } catch (error) {
+            console.error("Error fetching product:", error);
+            orderContainer.innerHTML = "<p class='text-red-500 text-center'>Failed to load order.</p>";
         }
+    });
 
-        function cancelOrder(id) {
-            const order = orders.find(order => order.id === id);
-            if (order) {
-                order.cancelled = true;
-                renderOrders();
-            }
+    function cancelOrder() {
+        const confirmCancel = confirm("Are you sure you want to cancel this order?");
+        if (confirmCancel) {
+            localStorage.removeItem("orderProductId");
+            document.getElementById("orders-container").innerHTML = `
+                <p class="text-center text-red-500 text-lg mt-10">Your order has been cancelled.</p>
+            `;
         }
+    }
 
-        renderOrders();
+    function confirmOrder() {
+        alert("Your order has been confirmed successfully!");
+        cancelOrder();
+    }
     </script>
 
 </body>
