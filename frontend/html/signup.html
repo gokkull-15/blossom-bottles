@@ -6,7 +6,6 @@
     <title>Sign Up Page</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
-
 </head>
 <body class="flex items-center justify-center min-h-screen bg-gray-900">
 
@@ -37,18 +36,41 @@
                 </button>
             </div>
         </form>
+        <p id="message" class="text-center mt-4 text-red-400"></p>
     </div>
 
     <script>
-        document.getElementById("signup-form").addEventListener("submit", function(event) {
-    event.preventDefault(); // Prevent form submission
-    window.location.href = "homepage1.html"; // Redirect to homepage
-});
+        document.getElementById("signup-form").addEventListener("submit", async function(event) {
+            event.preventDefault();
 
-document.getElementById("login-btn").addEventListener("click", function() {
-    window.location.href = "login.html"; // Redirect to login page
-});
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const messageElement = document.getElementById("message");
 
+            const response = await fetch("http://localhost:5000/api/signup", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name, email, password })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                messageElement.style.color = "green";
+                messageElement.textContent = "Signup successful! Redirecting...";
+                setTimeout(() => {
+                    window.location.href = "homepage1.html"; // Redirect to homepage after signup
+                }, 2000);
+            } else {
+                messageElement.style.color = "red";
+                messageElement.textContent = data.message || "Signup failed!";
+            }
+        });
+
+        document.getElementById("login-btn").addEventListener("click", function() {
+            window.location.href = "login.html"; // Redirect to login page
+        });
     </script>
 
 </body>
