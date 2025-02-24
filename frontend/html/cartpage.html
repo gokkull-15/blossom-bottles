@@ -35,59 +35,53 @@
 
     <!-- JavaScript -->
     <script>
-        let cartItems = [
-            { id: 1, name: "Blossom Bottle A", price: 19.99, image: "perfume1.png" },
-            { id: 2, name: "Blossom Bottle B", price: 24.99, image: "perfume3.png" }
-        ];
+    document.addEventListener("DOMContentLoaded", async () => {
+        const cartContainer = document.getElementById("cart-container");
+        const actions = document.getElementById("cart-actions");
+        const productId = localStorage.getItem("cartProductId");
 
-        function renderCart() {
-            const container = document.getElementById("cart-container");
-            const actions = document.getElementById("cart-actions");
-            container.innerHTML = "";
+        if (!productId) {
+            cartContainer.innerHTML = '<p class="text-center text-gray-400 mt-10 text-lg">Your cart is empty.</p>';
+            return;
+        }
 
-            if (cartItems.length === 0) {
-                container.innerHTML = '<p class="text-center text-gray-400 mt-10 text-lg">Your cart is empty.</p>';
-                actions.classList.add("hidden");
-                return;
-            }
+        try {
+            const response = await fetch(`http://localhost:5000/api/products/${productId}`);
+            if (!response.ok) throw new Error("Failed to fetch product");
+
+            const product = await response.json();
+            cartContainer.innerHTML = `
+                <div class="flex items-center bg-gray-800 p-4 rounded-lg mb-4 shadow-lg">
+                    <img src="${product.imageUrl}" alt="${product.name}" class="w-20 h-20 rounded-lg border border-gray-700">
+                    <div class="flex-1 ml-4">
+                        <h2 class="text-lg font-semibold">${product.name}</h2>
+                        <p class="text-yellow-400 font-bold">$${product.price.toFixed(2)}</p>
+                    </div>
+                    <button onclick="removeFromCart()" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg flex items-center gap-2">
+                        <i class="fas fa-trash"></i> Remove
+                    </button>
+                </div>
+            `;
 
             actions.classList.remove("hidden");
 
-            cartItems.forEach(item => {
-                const itemElement = document.createElement("div");
-                itemElement.className = "flex items-center bg-gray-800 p-4 rounded-lg mb-4 shadow-lg";
-                
-                itemElement.innerHTML = `
-                    <img src="${item.image}" alt="${item.name}" class="w-20 h-20 rounded-lg border border-gray-700">
-                    <div class="flex-1 ml-4">
-                        <h2 class="text-lg font-semibold">${item.name}</h2>
-                        <p class="text-yellow-400 font-bold">$${item.price.toFixed(2)}</p>
-                    </div>
-                    <button onclick="removeFromCart(${item.id})" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg flex items-center gap-2">
-                        <i class="fas fa-trash"></i> Remove
-                    </button>
-                `;
-                container.appendChild(itemElement);
-            });
+        } catch (error) {
+            console.error("Error fetching product:", error);
+            cartContainer.innerHTML = "<p class='text-red-500 text-center'>Failed to load product.</p>";
         }
+    });
 
-        function removeFromCart(id) {
-            cartItems = cartItems.filter(item => item.id !== id);
-            renderCart();
-        }
+    function removeFromCart() {
+        localStorage.removeItem("cartProductId");
+        window.location.reload();
+    }
 
-        function clearCart() {
-            cartItems = [];
-            renderCart();
-        }
+    function placeOrder() {
+        alert("Order placed successfully!");
+        removeFromCart();
+    }
+</script>
 
-        function placeOrder() {
-            alert("Order placed successfully!");
-            clearCart();
-        }
-
-        renderCart();
-    </script>
 
 </body>
 </html>
