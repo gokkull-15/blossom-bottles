@@ -99,9 +99,19 @@
     }
 
     function placeOrder() {
-        alert("Order placed successfully!");
-        removeFromCart();
+    const productId = localStorage.getItem("cartProductId");
+    
+    if (!productId) {
+        alert("Your cart is empty.");
+        return;
     }
+
+    // Store the product ID for the order page
+    localStorage.setItem("orderProductId", productId);
+
+    // Redirect to the order page
+    window.location.href = "orderpage.html";
+}
 
     // Logout Function
     document.getElementById("logout-btn").addEventListener("click", function() {
