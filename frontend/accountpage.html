@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
+
+</head>
+<body class="bg-gray-900 min-h-screen flex items-center justify-center p-6">
+
+    <!-- Account Card -->
+    <div class="bg-gray-800 p-10 rounded-xl shadow-lg text-white w-[450px] h-[500px] text-center">
+        
+        <!-- My Account Title -->
+        <h1 class="text-2xl font-bold text-purple-400 mb-4">My Account</h1>
+
+        <!-- Profile Section -->
+        <div class="flex flex-col items-center">
+            <i class="fas fa-user-circle text-7xl text-purple-400 mb-4"></i>
+            <h2 id="user-name" class="text-2xl font-semibold">John Doe</h2>
+            <p class="text-gray-400 flex items-center gap-2 justify-center">
+                <i class="fas fa-envelope"></i> <span id="user-email">johndoe@example.com</span>
+            </p>
+            <p class="text-gray-400 flex items-center gap-2 justify-center">
+                <i class="fas fa-map-marker-alt"></i> <span id="user-address">123 Blossom Street, NY, USA</span>
+            </p>
+        </div>
+
+        <!-- Buttons Section -->
+        <div class="mt-6 space-y-4">
+            <a href="orderpage.html" class="bg-purple-600 hover:bg-purple-700 px-8 py-3 rounded-lg text-lg flex items-center justify-center gap-2">
+                <i class="fas fa-clipboard-list"></i> Orders
+            </a>
+
+            <a href="cartpage.html" class="bg-blue-600 hover:bg-blue-700 px-8 py-3 rounded-lg text-lg flex items-center justify-center gap-2">
+                <i class="fas fa-shopping-cart"></i> Cart
+            </a>
+
+            <a href="index.html" class="bg-red-500 hover:bg-red-600 px-8 py-3 rounded-lg text-lg flex items-center justify-center gap-2">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>

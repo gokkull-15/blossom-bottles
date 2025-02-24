@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders - Your Purchases</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
+
+</head>
+<body class="bg-gray-900 min-h-screen text-white p-6">
+
+    <!-- Page Header -->
+    <h1 class="text-2xl font-bold flex items-center gap-2 pb-4 border-b border-gray-700">
+        <i class="fas fa-box"></i> Your Orders
+    </h1>
+
+    <!-- Orders Container -->
+    <div id="orders-container" class="mt-6">
+        <!-- Orders will be dynamically inserted here -->
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        const orders = [
+            { id: 1, name: "Blossom Bottle A", image: "perfume1.png", deliveryDate: "Feb 25, 2025", cancelled: false },
+            { id: 2, name: "Blossom Bottle B", image: "perfume3.png", deliveryDate: "Feb 27, 2025", cancelled: false }
+        ];
+
+        function renderOrders() {
+            const container = document.getElementById("orders-container");
+            container.innerHTML = "";
+
+            if (orders.length === 0) {
+                container.innerHTML = '<p class="text-center text-gray-400 mt-10 text-lg">No orders placed yet.</p>';
+                return;
+            }
+
+            orders.forEach(order => {
+                const orderElement = document.createElement("div");
+                orderElement.className = "bg-gray-800 p-4 rounded-lg mb-4 shadow-lg flex items-center";
+                
+                orderElement.innerHTML = `
+                    <img src="${order.image}" alt="${order.name}" class="w-20 h-20 rounded-lg border border-gray-700">
+                    <div class="ml-4 flex-1">
+                        <h2 class="text-lg font-semibold">${order.name}</h2>
+                        <p class="text-yellow-400 flex items-center gap-2">
+                            <i class="fas fa-calendar-alt"></i> Delivery Date: ${order.deliveryDate}
+                        </p>
+                    </div>
+                    ${
+                        order.cancelled
+                            ? `<p class="text-red-400 font-bold flex items-center gap-2"><i class="fas fa-times-circle"></i> Order Cancelled</p>`
+                            : `<button onclick="cancelOrder(${order.id})" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg flex items-center gap-2">
+                                <i class="fas fa-times-circle"></i> Cancel Order
+                              </button>`
+                    }
+                `;
+                container.appendChild(orderElement);
+            });
+        }
+
+        function cancelOrder(id) {
+            const order = orders.find(order => order.id === id);
+            if (order) {
+                order.cancelled = true;
+                renderOrders();
+            }
+        }
+
+        renderOrders();
+    </script>
+
+</body>
+</html>
