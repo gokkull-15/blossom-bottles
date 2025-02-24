@@ -2,7 +2,6 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const Product = require("../models/Product");
-const path = require("path");
 
 exports.signup = async (req, res) => {
   try {
@@ -116,33 +115,26 @@ exports.dashboard = async (req, res) => {
   }
 };
 
+// Add Product
 exports.addProduct = async (req, res) => {
   try {
-    const { productName, price } = req.body;
+    const { name, description, price, imageUrl } = req.body; // Image URL comes from frontend
 
-    // Check if image file is uploaded
-    if (!req.file) {
-      return res.status(400).json({ message: "Product image is required." });
+    if (!name || !description || !price || !imageUrl) {
+      return res.status(400).json({ error: "All fields are required" });
     }
 
-    const imageUrl = `uploads/${req.file.filename}`;
-
-    // Save to database
     const newProduct = new Product({
-      productName,
+      name,
+      description,
       price,
-      image: imageUrl,
+      imageUrl, // Save the URL, not the file
     });
 
     await newProduct.save();
-
-    res.status(201).json({
-      success: true,
-      message: "Product added successfully",
-      product: newProduct,
-    });
+    res.status(201).json({ message: "Product added successfully", product: newProduct });
   } catch (error) {
     console.error("Error adding product:", error);
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };

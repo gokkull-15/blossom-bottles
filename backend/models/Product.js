@@ -1,25 +1,27 @@
-const multer = require("multer");
+const mongoose = require("mongoose");
 
-// Set up storage engine
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads/"); // Save images in "uploads/" folder
+const ProductSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+    trim: true,
   },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + "-" + file.originalname); // Unique filename
+  description: {
+    type: String,
+    required: true,
+  },
+  price: {
+    type: Number,
+    required: true,
+  },
+  imageUrl: {
+    type: String, // Store only the URL of the image
+    required: true,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
   },
 });
 
-// File filter to accept only images
-const fileFilter = (req, file, cb) => {
-  if (file.mimetype.startsWith("image/")) {
-    cb(null, true);
-  } else {
-    cb(new Error("Only image files are allowed!"), false);
-  }
-};
-
-// Upload middleware
-const upload = multer({ storage, fileFilter });
-
-module.exports = upload;
+module.exports = mongoose.model("Product", ProductSchema);
