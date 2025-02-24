@@ -93,3 +93,24 @@ exports.login = async (req, res) => {
     });
   }
 };
+
+exports.dashboard = async (req, res) => {
+  try {
+    const userId = req.user.userId; // Extract userId from JWT token
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found." });
+    }
+
+    // Return only email and name
+    res.status(200).json({
+      email: user.email,
+      name: user.name, // Using 'name' from the User model
+    });
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    res.status(500).json({ message: "Internal Server Error." });
+  }
+};
+
