@@ -100,45 +100,49 @@
     <!-- JavaScript -->
     <script>
         async function handleSubmit(event) {
-            event.preventDefault();
-            
-            // Get input values
-            const name = document.getElementById("productName").value;
-            const price = document.getElementById("productPrice").value;
-            const description = document.getElementById("productDescription").value;
-            const imageUrl = document.getElementById("productImageUrl").value;
-            
-            // Construct request payload
-            const productData = {
-                name,
-                description,
-                price,
-                imageUrl
-            };
+    event.preventDefault();
 
-            try {
-                const response = await fetch("http://localhost:5000/api/products", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${localStorage.getItem("token")}` // Add token if required
-                    },
-                    body: JSON.stringify(productData)
-                });
+    // Get input values
+    const name = document.getElementById("productName").value;
+    const price = document.getElementById("productPrice").value;
+    const description = document.getElementById("productDescription").value;
+    const imageUrl = document.getElementById("productImageUrl").value;
 
-                const data = await response.json();
+    // Ask for confirmation
+    const isConfirmed = confirm(`Are you sure you want to add the product: "${name}"?`);
+    if (!isConfirmed) return;
 
-                if (response.ok) {
-                    alert("Product Added Successfully!");
-                    window.location.href = "homepage.html"; // Redirect to home page
-                } else {
-                    alert(data.message || "Error adding product.");
-                }
-            } catch (error) {
-                console.error("Error:", error);
-                alert("Something went wrong. Try again later.");
-            }
+    // Construct request payload
+    const productData = {
+        name,
+        description,
+        price,
+        imageUrl
+    };
+
+    try {
+        const response = await fetch("http://localhost:5000/api/products", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("token")}` // Add token if required
+            },
+            body: JSON.stringify(productData)
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            alert("Product Added Successfully!");
+            window.location.href = "homepage.html"; // Redirect to home page
+        } else {
+            alert(data.message || "Error adding product.");
         }
+    } catch (error) {
+        console.error("Error:", error);
+        alert("Something went wrong. Try again later.");
+    }
+}
     </script>
 
 </body>
