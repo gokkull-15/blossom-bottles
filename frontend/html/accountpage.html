@@ -22,16 +22,20 @@
         </div>
 
         <div class="mt-6 space-y-4">
-            <a href="orderpage.html" class="bg-purple-600 hover:bg-purple-700 px-8 py-3 rounded-lg text-lg flex items-center justify-center gap-2">
+            <a href="orderpage.html" class="bg-purple-600 hover:bg-purple-700 px-8 py-3 rounded-lg text-lg flex items-center justify-center gap-2 auth-link">
                 <i class="fas fa-clipboard-list"></i> Orders
             </a>
 
-            <a href="cartpage.html" class="bg-blue-600 hover:bg-blue-700 px-8 py-3 rounded-lg text-lg flex items-center justify-center gap-2">
+            <a href="cartpage.html" class="bg-blue-600 hover:bg-blue-700 px-8 py-3 rounded-lg text-lg flex items-center justify-center gap-2 auth-link">
                 <i class="fas fa-shopping-cart"></i> Cart
             </a>
 
-            <a href="homepage.html" class="bg-green-600 hover:bg-green-700 px-8 py-3 rounded-lg text-lg flex items-center justify-center gap-2">
+            <a href="homepage.html" class="bg-green-600 hover:bg-green-700 px-8 py-3 rounded-lg text-lg flex items-center justify-center gap-2 auth-link">
                 <i class="fas fa-home"></i> Home
+            </a>
+
+            <a href="sellerpage.html" class="bg-yellow-600 hover:bg-yellow-700 px-8 py-3 rounded-lg text-lg flex items-center justify-center gap-2 auth-link">
+                <i class="fas fa-store"></i> Seller Page
             </a>
 
             <button id="logout-btn" class="bg-red-500 hover:bg-red-600 px-8 py-3 rounded-lg text-lg flex items-center justify-center gap-2">
@@ -66,6 +70,20 @@
                 window.location.href = "login.html"; // Redirect to login if token is invalid
             }
         }
+
+        // Ensure token persists when navigating to other pages
+        document.querySelectorAll('.auth-link').forEach(link => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault();
+                const token = localStorage.getItem("token");
+                if (token) {
+                    window.location.href = `${link.getAttribute("href")}?token=${token}`;
+                } else {
+                    alert("Session expired. Please log in again.");
+                    window.location.href = "login.html";
+                }
+            });
+        });
 
         document.getElementById("logout-btn").addEventListener("click", function() {
             localStorage.removeItem("token");
