@@ -7,41 +7,61 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
 </head>
-<body class="bg-gray-900 min-h-screen flex items-center justify-center p-6">
-    
+<body class="bg-gray-900 min-h-screen flex flex-col">
 
-    <div class="bg-gray-800 p-10 rounded-xl shadow-lg text-white w-[450px] h-[550px] text-center">
-        
-        <h1 class="text-2xl font-bold text-purple-400 mb-4">My Account</h1>
-
-        <div class="flex flex-col items-center">
-            <i class="fas fa-user-circle text-7xl text-purple-400 mb-4"></i>
-            <h2 id="user-name" class="text-2xl font-semibold">Loading...</h2>
-            <p class="text-gray-400 flex items-center gap-2 justify-center">
-                <i class="fas fa-envelope"></i> <span id="user-email">Loading...</span>
-            </p>
+    <!-- Navbar -->
+    <nav class="bg-gray-800 p-4 flex justify-between items-center shadow-lg">
+        <h1 class="text-3xl font-bold text-yellow-400 flex items-center gap-2 transform transition duration-300 hover:scale-110">
+            <i class="fas fa-wine-bottle"></i> Blossom Bottles
+        </h1>
+        <div class="flex items-center space-x-4">
+            <a href="homepage.html" class="text-gray-300 hover:text-yellow-400 transition transform hover:scale-110 duration-200">Home</a>
+            <a href="accountpage.html" class="text-gray-300 hover:text-yellow-400 transition transform hover:scale-110 duration-200">Account</a>
+            <a href="cartpage.html" class="text-gray-300 hover:text-yellow-400 transition transform hover:scale-110 duration-200">Cart</a>
+            <a href="sellerpage.html" class="text-gray-300 hover:text-yellow-400 transition transform hover:scale-110 duration-200">Seller</a>
+            <a href="orderpage.html" class="text-gray-300 hover:text-yellow-400 transition transform hover:scale-110 duration-200">Order</a>
+            <a href="contact.html" class="text-gray-300 hover:text-yellow-400 transition transform hover:scale-110 duration-200">Contact</a>
         </div>
+    </nav>
 
-        <div class="mt-6 space-y-4">
-            <a href="homepage.html" class="bg-green-600 hover:bg-green-700 px-8 py-3 rounded-lg text-lg flex items-center justify-center gap-2 auth-link">
-                <i class="fas fa-home"></i> Home
-            </a>
+    <!-- Account Section -->
+    <div class="flex flex-grow items-center justify-center p-6">
+        <div class="bg-gray-800 p-10 rounded-xl shadow-lg text-white w-[450px] h-[550px] text-center">
             
-            <a href="cartpage.html" class="bg-blue-600 hover:bg-blue-700 px-8 py-3 rounded-lg text-lg flex items-center justify-center gap-2 auth-link">
-                <i class="fas fa-shopping-cart"></i> Cart
-            </a>
-            
-            <a href="orderpage.html" class="bg-purple-600 hover:bg-purple-700 px-8 py-3 rounded-lg text-lg flex items-center justify-center gap-2 auth-link">
-                <i class="fas fa-clipboard-list"></i> Orders
-            </a>
+            <h1 class="text-2xl font-bold text-purple-400 mb-4">My Account</h1>
 
+            <div class="flex flex-col items-center">
+                <i class="fas fa-user-circle text-7xl text-purple-400 mb-4"></i>
+                <h2 id="user-name" class="text-2xl font-semibold">Loading...</h2>
+                <p class="text-gray-400 flex items-center gap-2 justify-center">
+                    <i class="fas fa-envelope"></i> <span id="user-email">Loading...</span>
+                </p>
+            </div>
 
+            <div class="mt-6 space-y-4">
+                <a href="homepage.html" class="bg-green-600 hover:bg-green-700 px-8 py-3 rounded-lg text-lg flex items-center justify-center gap-2 auth-link">
+                    <i class="fas fa-home"></i> Home
+                </a>
+                
+                <a href="cartpage.html" class="bg-blue-600 hover:bg-blue-700 px-8 py-3 rounded-lg text-lg flex items-center justify-center gap-2 auth-link">
+                    <i class="fas fa-shopping-cart"></i> Cart
+                </a>
+                
+                <a href="orderpage.html" class="bg-purple-600 hover:bg-purple-700 px-8 py-3 rounded-lg text-lg flex items-center justify-center gap-2 auth-link">
+                    <i class="fas fa-clipboard-list"></i> Orders
+                </a>
 
-            <button id="logout-btn" class="bg-red-500 hover:bg-red-600 px-8 py-3 rounded-lg text-lg flex items-center justify-center gap-2">
-                <i class="fas fa-sign-out-alt"></i> Logout
-            </button>
+                <button id="logout-btn" class="bg-red-500 hover:bg-red-600 px-8 py-3 rounded-lg text-lg flex items-center justify-center gap-2">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
         </div>
     </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-gray-300 text-center p-4">
+        &copy; 2025 Blossom Bottles. All rights reserved.
+    </footer>
 
     <script>
         async function fetchUserData() {
