@@ -6,29 +6,21 @@
     <title>My Account</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
-
 </head>
 <body class="bg-gray-900 min-h-screen flex items-center justify-center p-6">
 
-    <!-- Account Card -->
-    <div class="bg-gray-800 p-10 rounded-xl shadow-lg text-white w-[450px] h-[500px] text-center">
+    <div class="bg-gray-800 p-10 rounded-xl shadow-lg text-white w-[450px] h-[550px] text-center">
         
-        <!-- My Account Title -->
         <h1 class="text-2xl font-bold text-purple-400 mb-4">My Account</h1>
 
-        <!-- Profile Section -->
         <div class="flex flex-col items-center">
             <i class="fas fa-user-circle text-7xl text-purple-400 mb-4"></i>
-            <h2 id="user-name" class="text-2xl font-semibold">John Doe</h2>
+            <h2 id="user-name" class="text-2xl font-semibold">Loading...</h2>
             <p class="text-gray-400 flex items-center gap-2 justify-center">
-                <i class="fas fa-envelope"></i> <span id="user-email">johndoe@example.com</span>
-            </p>
-            <p class="text-gray-400 flex items-center gap-2 justify-center">
-                <i class="fas fa-map-marker-alt"></i> <span id="user-address">123 Blossom Street, NY, USA</span>
+                <i class="fas fa-envelope"></i> <span id="user-email">Loading...</span>
             </p>
         </div>
 
-        <!-- Buttons Section -->
         <div class="mt-6 space-y-4">
             <a href="orderpage.html" class="bg-purple-600 hover:bg-purple-700 px-8 py-3 rounded-lg text-lg flex items-center justify-center gap-2">
                 <i class="fas fa-clipboard-list"></i> Orders
@@ -38,11 +30,50 @@
                 <i class="fas fa-shopping-cart"></i> Cart
             </a>
 
-            <a href="index.html" class="bg-red-500 hover:bg-red-600 px-8 py-3 rounded-lg text-lg flex items-center justify-center gap-2">
-                <i class="fas fa-sign-out-alt"></i> Logout
+            <a href="homepage.html" class="bg-green-600 hover:bg-green-700 px-8 py-3 rounded-lg text-lg flex items-center justify-center gap-2">
+                <i class="fas fa-home"></i> Home
             </a>
+
+            <button id="logout-btn" class="bg-red-500 hover:bg-red-600 px-8 py-3 rounded-lg text-lg flex items-center justify-center gap-2">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
         </div>
     </div>
+
+    <script>
+        async function fetchUserData() {
+            const token = localStorage.getItem("token");
+
+            if (!token) {
+                window.location.href = "login.html"; // Redirect to login if no token
+                return;
+            }
+
+            const response = await fetch("http://localhost:5000/api/dashboard", {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                document.getElementById("user-name").innerText = data.name;
+                document.getElementById("user-email").innerText = data.email;
+            } else {
+                alert("Session expired. Please log in again.");
+                localStorage.removeItem("token");
+                window.location.href = "login.html"; // Redirect to login if token is invalid
+            }
+        }
+
+        document.getElementById("logout-btn").addEventListener("click", function() {
+            localStorage.removeItem("token");
+            window.location.href = "login.html"; // Redirect to login on logout
+        });
+
+        fetchUserData();
+    </script>
 
 </body>
 </html>
