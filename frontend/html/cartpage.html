@@ -6,32 +6,54 @@
     <title>Your Cart</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
-
 </head>
-<body class="bg-gray-900 min-h-screen text-white p-6">
+<body class="bg-gray-900 min-h-screen text-white flex flex-col">
 
     <!-- Navbar -->
-    <div class="flex items-center justify-between pb-4 border-b border-gray-700">
-        <h1 class="text-2xl font-bold flex items-center gap-2">
-            <i class="fas fa-shopping-cart"></i> Your Cart
-        </h1>
-        <a href="homepage1.html" class="text-yellow-400 hover:text-yellow-500 flex items-center gap-2">
-            <i class="fas fa-arrow-left"></i> Continue Shopping
-        </a>
+    <nav class="bg-gray-800 p-4 flex justify-between items-center shadow-lg">
+    <h1 class="text-3xl font-bold text-yellow-400 flex items-center gap-2 transform transition duration-300 hover:scale-110">
+        <i class="fas fa-wine-bottle"></i> Blossom Bottles
+    </h1>
+    <div class="flex items-center space-x-4">
+        <a href="homepage.html" class="text-gray-300 hover:text-yellow-400 transition transform hover:scale-110 duration-200">Home</a>
+        <a href="accountpage.html" class="text-gray-300 hover:text-yellow-400 transition transform hover:scale-110 duration-200">Account</a>
+        <a href="cartpage.html" class="text-gray-300 hover:text-yellow-400 transition transform hover:scale-110 duration-200">Cart</a>
+        <a href="sellerpage.html" class="text-gray-300 hover:text-yellow-400 transition transform hover:scale-110 duration-200">Seller</a>
+        <a href="orderpage.html" class="text-gray-300 hover:text-yellow-400 transition transform hover:scale-110 duration-200">Order</a>
+        <a href="contact.html" class="text-gray-300 hover:text-yellow-400 transition transform hover:scale-110 duration-200">Contact</a>
+    </div>
+</nav>
+
+    <!-- Main Content -->
+    <div class="flex-grow p-6">
+        <!-- Cart Header -->
+        <div class="flex items-center justify-between pb-4 border-b border-gray-700">
+            <h1 class="text-2xl font-bold flex items-center gap-2">
+                <i class="fas fa-shopping-cart"></i> Your Cart
+            </h1>
+            <a href="homepage.html" class="text-yellow-400 hover:text-yellow-500 flex items-center gap-2">
+                <i class="fas fa-arrow-left"></i> Continue Shopping
+            </a>
+        </div>
+
+        <!-- Cart Container -->
+        <div id="cart-container" class="mt-6"></div>
+
+        <!-- Cart Actions -->
+        <div id="cart-actions" class="mt-6 flex justify-between hidden">
+            <button onclick="placeOrder()" class="bg-yellow-400 hover:bg-yellow-500 text-gray-900 px-6 py-3 rounded-lg font-bold flex items-center gap-2">
+                <i class="fas fa-check-circle"></i> Place Order
+            </button>
+            <button onclick="clearCart()" class="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-lg font-bold flex items-center gap-2">
+                <i class="fas fa-trash"></i> Clear Cart
+            </button>
+        </div>
     </div>
 
-    <!-- Cart Container -->
-    <div id="cart-container" class="mt-6"></div>
-
-    <!-- Cart Actions -->
-    <div id="cart-actions" class="mt-6 flex justify-between hidden">
-        <button onclick="placeOrder()" class="bg-yellow-400 hover:bg-yellow-500 text-gray-900 px-6 py-3 rounded-lg font-bold flex items-center gap-2">
-            <i class="fas fa-check-circle"></i> Place Order
-        </button>
-        <button onclick="clearCart()" class="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-lg font-bold flex items-center gap-2">
-            <i class="fas fa-trash"></i> Clear Cart
-        </button>
-    </div>
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-center py-4 text-gray-400 mt-auto">
+        &copy; 2025 Your Shop. All Rights Reserved.
+    </footer>
 
     <!-- JavaScript -->
     <script>
@@ -80,8 +102,13 @@
         alert("Order placed successfully!");
         removeFromCart();
     }
-</script>
 
+    // Logout Function
+    document.getElementById("logout-btn").addEventListener("click", function() {
+        localStorage.removeItem("token");
+        window.location.href = "login.html"; // Redirect to login on logout
+    });
+</script>
 
 </body>
 </html>
