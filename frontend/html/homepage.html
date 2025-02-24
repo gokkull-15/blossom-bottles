@@ -92,13 +92,19 @@
     });
 
     function addToCart(productId) {
+    const confirmAdd = confirm("Are you sure you want to add this item to the cart?");
+    if (confirmAdd) {
         localStorage.setItem("cartProductId", productId);
         window.location.href = "cartpage.html"; // Redirect to cart
     }
+}
 
-    function orderNow(productId) {
-    localStorage.setItem("orderProductId", productId);
-    window.location.href = "orderpage.html"; // Redirect to order page
+function orderNow(productId) {
+    const confirmOrder = confirm("Are you sure you want to place an order for this item?");
+    if (confirmOrder) {
+        localStorage.setItem("orderProductId", productId);
+        window.location.href = "orderpage.html"; // Redirect to order page
+    }
 }
 
 </script>
