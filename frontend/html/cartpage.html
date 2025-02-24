@@ -58,47 +58,56 @@
     <!-- JavaScript -->
     <script>
     document.addEventListener("DOMContentLoaded", async () => {
-        const cartContainer = document.getElementById("cart-container");
-        const actions = document.getElementById("cart-actions");
-        const productId = localStorage.getItem("cartProductId");
+    const cartContainer = document.getElementById("cart-container");
+    const actions = document.getElementById("cart-actions");
+    const productId = localStorage.getItem("cartProductId");
 
-        if (!productId) {
-            cartContainer.innerHTML = '<p class="text-center text-gray-400 mt-10 text-lg">Your cart is empty.</p>';
-            return;
-        }
+    if (!productId) {
+        cartContainer.innerHTML = '<p class="text-center text-gray-400 mt-10 text-lg">Your cart is empty.</p>';
+        return;
+    }
 
-        try {
-            const response = await fetch(`http://localhost:5000/api/products/${productId}`);
-            if (!response.ok) throw new Error("Failed to fetch product");
+    try {
+        const response = await fetch(`http://localhost:5000/api/products/${productId}`);
+        if (!response.ok) throw new Error("Failed to fetch product");
 
-            const product = await response.json();
-            cartContainer.innerHTML = `
-                <div class="flex items-center bg-gray-800 p-4 rounded-lg mb-4 shadow-lg">
-                    <img src="${product.imageUrl}" alt="${product.name}" class="w-20 h-20 rounded-lg border border-gray-700">
-                    <div class="flex-1 ml-4">
-                        <h2 class="text-lg font-semibold">${product.name}</h2>
-                        <p class="text-yellow-400 font-bold">$${product.price.toFixed(2)}</p>
-                    </div>
-                    <button onclick="removeFromCart()" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg flex items-center gap-2">
-                        <i class="fas fa-trash"></i> Remove
-                    </button>
+        const product = await response.json();
+        cartContainer.innerHTML = `
+            <div class="flex items-center bg-gray-800 p-4 rounded-lg mb-4 shadow-lg">
+                <img src="${product.imageUrl}" alt="${product.name}" class="w-20 h-20 rounded-lg border border-gray-700">
+                <div class="flex-1 ml-4">
+                    <h2 class="text-lg font-semibold">${product.name}</h2>
+                    <p class="text-yellow-400 font-bold">$${product.price.toFixed(2)}</p>
                 </div>
-            `;
+                <button onclick="removeFromCart()" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg flex items-center gap-2">
+                    <i class="fas fa-trash"></i> Remove
+                </button>
+            </div>
+        `;
 
-            actions.classList.remove("hidden");
+        actions.classList.remove("hidden");
 
-        } catch (error) {
-            console.error("Error fetching product:", error);
-            cartContainer.innerHTML = "<p class='text-red-500 text-center'>Failed to load product.</p>";
-        }
-    });
+    } catch (error) {
+        console.error("Error fetching product:", error);
+        cartContainer.innerHTML = "<p class='text-red-500 text-center'>Failed to load product.</p>";
+    }
+});
 
-    function removeFromCart() {
+function removeFromCart() {
+    if (confirm("Are you sure you want to remove this item from your cart?")) {
         localStorage.removeItem("cartProductId");
         window.location.reload();
     }
+}
 
-    function placeOrder() {
+function clearCart() {
+    if (confirm("Are you sure you want to clear your cart? This action cannot be undone.")) {
+        localStorage.removeItem("cartProductId");
+        window.location.reload();
+    }
+}
+
+function placeOrder() {
     const productId = localStorage.getItem("cartProductId");
     
     if (!productId) {
@@ -106,18 +115,20 @@
         return;
     }
 
-    // Store the product ID for the order page
-    localStorage.setItem("orderProductId", productId);
-
-    // Redirect to the order page
-    window.location.href = "orderpage.html";
+    if (confirm("Are you sure you want to place this order?")) {
+        localStorage.setItem("orderProductId", productId);
+        window.location.href = "orderpage.html";
+    }
 }
 
-    // Logout Function
-    document.getElementById("logout-btn").addEventListener("click", function() {
+// Logout Function
+document.getElementById("logout-btn")?.addEventListener("click", function() {
+    if (confirm("Are you sure you want to log out?")) {
         localStorage.removeItem("token");
         window.location.href = "login.html"; // Redirect to login on logout
-    });
+    }
+});
+
 </script>
 
 </body>
