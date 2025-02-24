@@ -6,12 +6,11 @@
     <title>Seller Page - Add Product</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
-
 </head>
 <body class="bg-gray-900 min-h-screen flex items-center justify-center p-6">
 
     <!-- Card Container -->
-    <div class="bg-gray-800 p-12 rounded-2xl shadow-lg text-white w-[550px] h-[500px] text-center">
+    <div class="bg-gray-800 p-12 rounded-2xl shadow-lg text-white w-[550px] text-center">
         
         <!-- Title -->
         <h1 class="text-3xl font-bold text-purple-400 mb-6">Add a Product</h1>
@@ -43,18 +42,28 @@
                 />
             </div>
 
-            <!-- Image Upload -->
-            <label class="flex items-center bg-gray-700 p-4 rounded-lg cursor-pointer">
-                <i class="fas fa-image text-blue-400 mr-3 text-xl"></i>
+            <!-- Description -->
+            <div class="flex items-center bg-gray-700 p-4 rounded-lg">
+                <i class="fas fa-align-left text-yellow-400 mr-3 text-xl"></i>
+                <textarea 
+                    id="productDescription" 
+                    placeholder="Product Description" 
+                    required
+                    class="w-full bg-transparent outline-none text-white placeholder-gray-400 text-lg resize-none"
+                ></textarea>
+            </div>
+
+            <!-- Image URL -->
+            <div class="flex items-center bg-gray-700 p-4 rounded-lg">
+                <i class="fas fa-link text-blue-400 mr-3 text-xl"></i>
                 <input 
-                    type="file" 
-                    id="productImage" 
-                    accept="image/*" 
-                    required 
-                    class="hidden"
+                    type="url" 
+                    id="productImageUrl" 
+                    placeholder="Image URL" 
+                    required
+                    class="w-full bg-transparent outline-none text-white placeholder-gray-400 text-lg"
                 />
-                <span class="text-white text-lg">Choose an Image</span>
-            </label>
+            </div>
 
             <!-- Submit Button -->
             <button 
@@ -68,19 +77,45 @@
 
     <!-- JavaScript -->
     <script>
-        function handleSubmit(event) {
+        async function handleSubmit(event) {
             event.preventDefault();
+            
+            // Get input values
             const name = document.getElementById("productName").value;
             const price = document.getElementById("productPrice").value;
-            const image = document.getElementById("productImage").files[0];
+            const description = document.getElementById("productDescription").value;
+            const imageUrl = document.getElementById("productImageUrl").value;
+            
+            // Construct request payload
+            const productData = {
+                name,
+                description,
+                price,
+                imageUrl
+            };
 
-            if (!image) {
-                alert("Please select an image!");
-                return;
+            try {
+                const response = await fetch("http://localhost:5000/api/products", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${localStorage.getItem("token")}` // Add token if required
+                    },
+                    body: JSON.stringify(productData)
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert("Product Added Successfully!");
+                    window.location.href = "homepage.html"; // Redirect to home page
+                } else {
+                    alert(data.message || "Error adding product.");
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                alert("Something went wrong. Try again later.");
             }
-
-            alert("Product Submitted!");
-            console.log({ name, price, image });
         }
     </script>
 
