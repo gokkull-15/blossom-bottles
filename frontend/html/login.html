@@ -6,7 +6,6 @@
     <title>Login Page</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
-
 </head>
 <body class="flex items-center justify-center min-h-screen bg-gray-900">
 
@@ -26,6 +25,7 @@
             <button type="submit" class="w-full bg-yellow-600 text-gray-900 py-3 rounded-lg hover:bg-yellow-500 transition duration-300 flex items-center justify-center gap-2">
                 <i class="fas fa-lock text-2xl"></i> Login
             </button>
+            <p id="message" class="text-center mt-4 text-red-400"></p>
             <div class="mt-6 text-center text-gray-400">
                 <p>Or</p>
                 <button id="signup-btn" class="text-yellow-400 hover:text-yellow-300 transition">
@@ -36,15 +36,40 @@
     </div>
 
     <script>
-        document.getElementById("login-form").addEventListener("submit", function(event) {
-    event.preventDefault(); // Prevent form submission
-    window.location.href = "homepage.html"; // Redirect to homepage
-});
+        document.getElementById("login-form").addEventListener("submit", async function(event) {
+            event.preventDefault();
 
-document.getElementById("signup-btn").addEventListener("click", function() {
-    window.location.href = "signup.html"; // Redirect to signup page
-});
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const messageElement = document.getElementById("message");
 
+            try {
+                const response = await fetch("http://localhost:5000/api/login", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    localStorage.setItem("jwtToken", data.token); // Store token in localStorage
+                    messageElement.style.color = "green";
+                    messageElement.textContent = "Login successful! Redirecting...";
+                    setTimeout(() => {
+                        window.location.href = "login.html"; // Redirect to homepage
+                    }, 2000);
+                } else {
+                    messageElement.textContent = data.message || "Invalid credentials!";
+                }
+            } catch (error) {
+                messageElement.textContent = "An error occurred. Please try again.";
+            }
+        });
+
+        document.getElementById("signup-btn").addEventListener("click", function() {
+            window.location.href = "signup.html"; // Redirect to signup page
+        });
     </script>
 
 </body>
